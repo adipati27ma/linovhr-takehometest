@@ -1,0 +1,15 @@
+BEGIN;
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    employee_code VARCHAR(50) UNIQUE NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    user_role VARCHAR(20) NOT NULL, -- EMPLOYEE / MANAGER
+    annual_leave_quota INT NOT NULL DEFAULT 12,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(100) NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by VARCHAR(100) NOT NULL
+);
+COMMIT;

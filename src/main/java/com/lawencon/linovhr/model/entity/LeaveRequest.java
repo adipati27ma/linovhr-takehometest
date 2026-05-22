@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "leave_requests")
 @EntityListeners({AuditingEntityListener.class})
-public class LeaveRequest extends BaseEntity{
+public class LeaveRequest extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,12 +46,12 @@ public class LeaveRequest extends BaseEntity{
     @Column(name = "rejection_reason", columnDefinition = "TEXT")
     private String rejectionReason;
 
+    @Column(name = "approved_at")
+    private LocalDateTime approvedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "approved_by")
     private User approvedBy;
-
-    @Column(name = "approved_at")
-    private LocalDateTime approvedAt;
 
     @PrePersist
     public void prePersist() {
