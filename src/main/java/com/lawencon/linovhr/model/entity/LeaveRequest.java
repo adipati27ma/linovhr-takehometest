@@ -8,9 +8,9 @@ import org.springframework.data.jpa.domain.support.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -58,5 +58,18 @@ public class LeaveRequest extends BaseEntity {
         if (this.status == null) {
             this.status = LeaveStatus.PENDING;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LeaveRequest that = (LeaveRequest) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
