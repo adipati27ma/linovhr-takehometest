@@ -1,6 +1,5 @@
 package com.lawencon.linovhr.controller;
 
-import com.lawencon.linovhr.exception.*;
 import com.lawencon.linovhr.model.api.*;
 import com.lawencon.linovhr.model.api.request.*;
 import com.lawencon.linovhr.service.*;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class AuthController {
     private final AuthService authService;
-    private final ApiExceptionHandler apiExceptionHandler;
 
     @GetMapping("/ping")
     public String ping() {

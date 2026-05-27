@@ -27,7 +27,6 @@ import java.util.*;
 @RequiredArgsConstructor
 @NullMarked
 public class JwtFilter extends OncePerRequestFilter {
-    private final JwtConfig jwtConfig;
     private final JwtService jwtService;
     private final HandlerExceptionResolver handlerExceptionResolver;
     private final UserService userService;

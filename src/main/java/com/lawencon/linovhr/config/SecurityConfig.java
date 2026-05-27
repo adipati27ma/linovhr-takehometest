@@ -21,13 +21,14 @@ import java.util.List;
 public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final JwtFilter jwtFilter;
+    private final JwtConfig jwtConfig;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/auth/**")
+                                .requestMatchers(jwtConfig.getWhitelistUrl().split("\\|"))
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
