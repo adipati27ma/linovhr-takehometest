@@ -4,6 +4,15 @@ Take Home Test for the Full Stack Developer recruitment process at Lawencon Indo
 
 This project is a simple REST API for an Employee Leave Request system built using Spring Boot.
 
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [API Documentation](#api-documentation)
+- [Author](#author)
+
 ## Features
 
 ### Authentication
