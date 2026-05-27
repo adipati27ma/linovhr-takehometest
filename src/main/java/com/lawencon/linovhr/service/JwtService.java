@@ -1,12 +1,12 @@
 package com.lawencon.linovhr.service;
 
+import com.lawencon.linovhr.model.entity.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.*;
@@ -23,9 +23,9 @@ public class JwtService {
     private String secret;
     @Value("${security.jwt.expiration}")
     private long jwtExpirations;
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, User user) {
         // username used here is employee code
-        String username = userDetails.getUsername();
+        String username = user.getUsername();
         String extractedUsername = extractUsername(token);
         return (username.equals(extractedUsername) && !isTokenExpired(token));
     }
@@ -33,17 +33,17 @@ public class JwtService {
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
-    public String generateToken(UserDetails userDetails) {
-        return buildToken(new HashMap<>(), userDetails);
+    public String generateToken(User user) {
+        return buildToken(new HashMap<>(), user);
     }
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return buildToken(extraClaims, userDetails);
+    public String generateToken(Map<String, Object> extraClaims, User user) {
+        return buildToken(extraClaims, user);
     }
-    public String buildToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String buildToken(Map<String, Object> extraClaims, User user) {
         return Jwts
                 .builder()
                 .claims(extraClaims)
-                .subject(userDetails.getUsername())
+                .subject(user.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + jwtExpirations))
                 .signWith(getSignInKey())

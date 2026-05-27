@@ -1,5 +1,6 @@
 package com.lawencon.linovhr.service.impl;
 
+import com.lawencon.linovhr.exception.*;
 import com.lawencon.linovhr.model.api.*;
 import com.lawencon.linovhr.model.api.request.*;
 import com.lawencon.linovhr.model.api.response.*;
@@ -7,10 +8,7 @@ import com.lawencon.linovhr.model.entity.*;
 import com.lawencon.linovhr.repository.*;
 import com.lawencon.linovhr.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +23,15 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public BaseResponse<Object> loginUser(LoginRequest loginRequest) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getEmployeeCode(),
-                            loginRequest.getPassword()
-                    )
-            );
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException(e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        User user = userRepository.findByEmployeeCode(loginRequest.getEmployeeCode()).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+        // authenticate the user
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmployeeCode(),
+                        loginRequest.getPassword()
+                )
+        );
+
+        User user = userRepository.findByEmployeeCode(loginRequest.getEmployeeCode()).orElseThrow(BusinessException::userNotFound);
         String token = jwtService.generateToken(user);
         LoginResponse loginResponseDTO = LoginResponse.builder()
                 .accessToken(token)

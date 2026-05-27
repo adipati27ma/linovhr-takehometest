@@ -1,5 +1,6 @@
 package com.lawencon.linovhr.config;
 
+import com.lawencon.linovhr.model.entity.User;
 import com.lawencon.linovhr.service.*;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,7 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtConfig jwtConfig;
     private final JwtService jwtService;
     private final HandlerExceptionResolver handlerExceptionResolver;
-    private final UserDetailsService userService;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -46,15 +47,16 @@ public class JwtFilter extends OncePerRequestFilter {
             String employeeCode = jwtService.extractUsername(jwt);
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (employeeCode != null && authentication == null) {
-                UserDetails userDetails = userService.loadUserByUsername(employeeCode);
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+                User user = userService.findUserByUsername(employeeCode);
+                if (jwtService.isTokenValid(jwt, user)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
+                            user,
                             null,
-                            userDetails.getAuthorities()
+                            user.getAuthorities()
                     );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                    request.setAttribute("user", user);
                 }
             }
             filterChain.doFilter(request, response);

@@ -34,16 +34,24 @@ public class BusinessException extends BaseBusinessException {
         return new BusinessException(String.format("%s Not Found: %s", item, id));
     }
 
+    public static BusinessException userNotFound() {
+        return new BusinessException(LINOV, "AUTH-001", "User not found");
+    }
+
+    public static BusinessException userOrPasswordWrong() {
+        return new BusinessException(LINOV, "AUTH-002", "User or password is wrong");
+    }
+
     public static BusinessException tokenNotFound() {
-        return new BusinessException(LINOV, "AUTH-001", "Token not found");
+        return new BusinessException(LINOV, "AUTH-003", "Token not found");
     }
 
     public static BusinessException invalidToken() {
-        return new BusinessException(LINOV, "AUTH-002", "Invalid Token");
+        return new BusinessException(LINOV, "AUTH-004", "Invalid Token");
     }
 
     public static BusinessException requestExpired() {
-        return new BusinessException(LINOV, "AUTH-003", "Expired Token");
+        return new BusinessException(LINOV, "AUTH-005", "Expired Token");
     }
 
     public static BusinessException generalError() {
