@@ -6,14 +6,35 @@ This project is a simple REST API for an Employee Leave Request system built usi
 
 ## Features
 
-- JWT Authentication
-- Employee Leave Request API
-- Leave Quota Validation
-- Request Approval / Rejection Flow
-- Global Exception Handling
-- Flyway Database Migration
-- Dockerized PostgreSQL Database
-- RESTful API Architecture
+### Authentication
+- JWT Authentication ✅
+- Role-based authorization (Employee & Manager)
+
+### Leave Request
+- Create leave request
+- Get employee leave history
+- Get all employee leave requests (Manager)
+- Approve leave request
+- Reject leave request
+
+### Validation Rules
+- Leave quota validation
+- Leave overlapping validation
+- Start date and end date validation
+- Approval status validation
+
+### Technical Features
+- Global exception handling ✅
+- Database migration with Flyway ✅
+- Dockerized PostgreSQL setup ✅
+
+### Coming Soon
+- Swagger / OpenAPI documentation
+- Pagination support
+- Transaction handling improvement
+- Redis caching
+- Unit testing & integration testing
+- CI/CD pipeline setup
 
 ## Tech Stack
 
