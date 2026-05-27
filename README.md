@@ -106,4 +106,4 @@ Currently, API testing can be done using Postman or similar API tools.
 
 ## Author
 
-Adipati Alamsyah
+[adipati27ma](https://github.com/adipati27ma)
