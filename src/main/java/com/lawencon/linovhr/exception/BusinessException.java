@@ -57,4 +57,14 @@ public class BusinessException extends BaseBusinessException {
     public static BusinessException generalError() {
         return new BusinessException(LINOV, "ERR-01", "GENERAL ERROR");
     }
+
+    public static BusinessException invalidDateNull() {
+        return new BusinessException(LINOV, "DATE-01", "startDate and endDate must be provided");
+    }
+    public static BusinessException invalidDateFormat() {
+        return new BusinessException(LINOV, "DATE-02", "startDate and endDate must be in format yyyy-MM-dd");
+    }
+    public static BusinessException invalidDate() {
+        return new BusinessException(LINOV, "DATE-03", "startDate must be before or equal to endDate");
+    }
 }
